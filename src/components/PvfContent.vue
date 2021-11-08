@@ -40,7 +40,7 @@
       <v-row cols="12" class="mt-5">
         <v-col align="center" cols="12">
           <v-card-title class="justify-center">
-            Predicción de Pac generado
+            Predicción del Pac generado
           </v-card-title>
           <v-card-text class="text-center">
             Se realizan una predicción para cada hora entre las 4 a. m. y las 5
@@ -56,6 +56,9 @@
       </v-row>
 
       <v-row class="mt-3 mb-3">
+          <v-card-text class="text-center">
+            Métricas
+          </v-card-text>
         <v-col cols="6" align="right">
           <v-card align="center" width="200">
             <v-icon size="50px" class="mt-3"> mdi-chart-areaspline</v-icon>
