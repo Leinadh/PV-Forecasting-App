@@ -31,14 +31,21 @@
             min="2016-06-15"
             max="2018-03-20"
             locale="es-MX"
-            width="400"
             color="primary"
           ></v-date-picker>
         </v-col>
       </v-row>
       <v-divider></v-divider>
+
       <v-row cols="12" class="mt-5">
         <v-col align="center" cols="12">
+          <v-card-title class="justify-center">
+            Predicción de Pac generado
+          </v-card-title>
+          <v-card-text class="text-center">
+            Se realizan una predicción para cada hora entre las 4 a. m. y las 5
+            p. m. del día seleccionado
+          </v-card-text>
           <v-img
             :src="require('../assets/logo.svg')"
             class="my-3"
@@ -49,18 +56,20 @@
       </v-row>
 
       <v-row class="mt-3 mb-3">
-        <v-col cols="6" align="right" class="justify-center">
-          <v-card class="justify-center" align="center" width="200">
-            <v-icon size="50px" right> mdi-chart-areaspline</v-icon>
-            <v-card-title>122</v-card-title>
-            <v-card-text class="text-left"> RMSE de predicción </v-card-text>
+        <v-col cols="6" align="right">
+          <v-card align="center" width="200">
+            <v-icon size="50px" class="mt-3"> mdi-chart-areaspline</v-icon>
+            <v-card-title class="justify-center">122</v-card-title>
+            <v-card-text class="text-center"> RMSE de predicción </v-card-text>
           </v-card>
         </v-col>
-        <v-col cols="6" align="left" align-self="center">
+        <v-col cols="6" align="left">
           <v-card align="center" width="200">
-            <v-icon size="50px" right> mdi-chart-areaspline</v-icon>
-            <v-card-title>123</v-card-title>
-            <v-card-text class="text-left"> RMSE del día anterior </v-card-text>
+            <v-icon size="50px" class="mt-3"> mdi-chart-areaspline</v-icon>
+            <v-card-title class="justify-center">123</v-card-title>
+            <v-card-text class="text-center">
+              RMSE del día anterior
+            </v-card-text>
           </v-card>
         </v-col>
       </v-row>

@@ -24,8 +24,8 @@
 
       <v-spacer></v-spacer>
 
-      <v-chip label outlined class="mr-2"> {{ currentDate }} </v-chip>
-      <v-chip label outlined class="mr-1"> {{ currentTime }}</v-chip>
+      <v-chip label  color="accent" outlined  class="mr-2"> {{ currentDate }} </v-chip>
+      <v-chip label color="accent" outlined  class="mr-1"> {{ currentTime }}</v-chip>
       <!-- <v-chip label outlined class="mr-2" color="secondary" text-color="white"> 10:44 P.M. </v-chip> -->
 
       <!-- <v-spacer></v-spacer> -->
