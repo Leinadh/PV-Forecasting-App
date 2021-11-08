@@ -2,15 +2,22 @@
   <v-app>
     <v-app-bar app color="primary" dark>
       <div class="d-flex align-center">
-        <v-img
+        <!-- <v-img
           alt="Vuetify Logo"
           class="shrink ml-1 mr-2"
           contain
           src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
           transition="scale-transition"
           width="25"
+        /> -->
+        <v-img
+          alt="App Logo"
+          class="shrink ml-1 mr-2"
+          contain
+          src="@/assets/pv-forecasting-logo.svg"
+          transition="scale-transition"
+          width="31"
         />
-
         <v-img
           alt="Vuetify Name"
           class="shrink mt-1 ml-1 hidden-sm-and-down"
