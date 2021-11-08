@@ -3,7 +3,7 @@
     <v-col>
       <v-row cols="12" class="mt-0">
         <v-card-text class="text-center">
-          Por favor seleccione una ubicación y un día de pronóstico.
+          Por favor, seleccione una ubicación y un día de pronóstico.
         </v-card-text>
       </v-row>
       <v-row cols="12" class="mb-4">
@@ -43,8 +43,8 @@
             Predicción del Pac generado
           </v-card-title>
           <v-card-text class="text-center">
-            Se realizan una predicción para cada hora entre las 4 a. m. y las 5
-            p. m. del día seleccionado
+            Se realiza una predicción para cada hora entre las 4 a. m. y las 5
+            p. m. del día seleccionado.
           </v-card-text>
           <v-img
             :src="require('../assets/logo.svg')"
@@ -56,9 +56,7 @@
       </v-row>
 
       <v-row class="mt-3 mb-3">
-          <v-card-text class="text-center">
-            Métricas
-          </v-card-text>
+        <v-card-text class="text-center"> Métricas </v-card-text>
         <v-col cols="6" align="right">
           <v-card align="center" width="200">
             <v-icon size="50px" class="mt-3"> mdi-chart-areaspline</v-icon>
