@@ -1,10 +1,10 @@
 <template>
   <v-app>
     <v-app-bar app color="primary" dark>
-      <div class="d-flex align-center ml-2">
+      <div class="d-flex align-center">
         <v-img
           alt="Vuetify Logo"
-          class="shrink mr-2"
+          class="shrink ml-1 mr-2"
           contain
           src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
           transition="scale-transition"
@@ -24,8 +24,8 @@
 
       <v-spacer></v-spacer>
 
-      <v-chip label class="mx-2"> {{ currentDate }} </v-chip>
-      <v-chip label class="mr-2"> {{ currentTime }}</v-chip>
+      <v-chip label outlined class="mr-2"> {{ currentDate }} </v-chip>
+      <v-chip label outlined class="mr-1"> {{ currentTime }}</v-chip>
       <!-- <v-chip label outlined class="mr-2" color="secondary" text-color="white"> 10:44 P.M. </v-chip> -->
 
       <!-- <v-spacer></v-spacer> -->
@@ -41,19 +41,24 @@
 
     <v-main>
       <!-- <HelloWorld /> -->
-      
+      <PvfContent />
+      <PvfFooter />
     </v-main>
   </v-app>
 </template>
 
 <script>
 // import HelloWorld from "./components/HelloWorld";
+import PvfContent from "./components/PvfContent";
+import PvfFooter from "./components/PvfFooter";
 
 export default {
   name: "App",
 
   components: {
     // HelloWorld,
+    PvfContent,
+    PvfFooter,
   },
 
   data: () => ({
@@ -73,15 +78,15 @@ export default {
       "noviembre",
       "diciembre",
     ],
-    days: [
-      "Domingo",
-      "Lunes",
-      "Martes",
-      "Miércoles",
-      "Jueves",
-      "Viernes",
-      "Sábado",
-    ],
+    // days: [
+    //   "",
+    //   "Lunes",
+    //   "Martes",
+    //   "Miércoles",
+    //   "Jueves",
+    //   "Viernes",
+    //   "Sábado",
+    // ],
   }),
 
   methods: {
@@ -108,13 +113,14 @@ export default {
         segundos = "0" + segundos;
       }
 
-      let day = this.days[datetime.getDay()];
+      // let day = this.days[datetime.getDay()];
       let date = datetime.getDate();
       let month = this.months[datetime.getMonth()];
       let year = datetime.getFullYear();
 
       this.currentTime = hora + ":" + minutos + ":" + segundos + ampm;
-      this.currentDate = day + ", " + date + " de " + month + " de " + year;
+      this.currentDate = date + " de " + month + " de " + year;
+      // this.currentDate = day + ", " + date + " de " + month + " de " + year;
     },
   },
 
