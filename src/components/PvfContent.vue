@@ -3,7 +3,9 @@
     <v-col>
       <v-row cols="12" class="mt-0">
         <v-card-text class="text-center">
-          Por favor, seleccione una ubicación y un día de pronóstico.
+          Por favor, seleccione una ubicación y un día de pronóstico.'
+          <!-- <br>
+          Se mostrará una simulación de las predicciones exactamente hace un año. -->
         </v-card-text>
       </v-row>
       <v-row cols="12" class="mb-4">
@@ -17,12 +19,8 @@
             item-value="id_ubicacion_modelo"
             label="Ubicación seleccionada"
           ></v-select>
-          <v-img
-            :src="require('../assets/logo.svg')"
-            class="my-3"
-            contain
-            height="200"
-          />
+          <!-- :src="require('../assets/logo.svg')" -->
+          <v-img :src="imagen_ubicacion" class="my-3" contain height="200" />
 
           <v-card>
             <v-card-title>
@@ -35,7 +33,9 @@
             <v-card-text class="text-left">
               {{
                 filtrarUbicaion(ubicaciones, idUbicacion).length > 0
-                  ? obtenerDescripcion(filtrarUbicaion(ubicaciones, idUbicacion)[0])
+                  ? obtenerDescripcion(
+                      filtrarUbicaion(ubicaciones, idUbicacion)[0]
+                    )
                   : ""
               }}
             </v-card-text>
@@ -105,6 +105,11 @@ export default {
     // PvfSelect,
   },
   data: () => ({
+    imagen_ubicacion: 
+      require("../assets/logo.svg"),
+    // "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScESJtxLLl9e12q9nTIgacSptopeZR1tAFbA&usqp",
+    // "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRR13g5pvUfHTTvC1Xgk80uhzSZHYXWydYWsg",
+    // "https://www.minera-irl.com/wp-content/uploads/2015/05/mapa-peru.jpg",
     ubicacionDefault: { id_ubicacion_modelo: 0, texto_ubicacion: "" },
     ubicaciones: [
       {
@@ -157,8 +162,10 @@ export default {
       this.idUbicacion = ubicacion_seleccionada;
     },
     obtenerTitulo(ubicacion_seleccionada) {
-      let transferido_texto = ubicacion_seleccionada.is_trasfered ? ' (Transferido)' : ' (No transferido)'
-      return  'Modelo ' + ubicacion_seleccionada.model_name + transferido_texto;
+      let transferido_texto = ubicacion_seleccionada.is_trasfered
+        ? " (Transferido)"
+        : " (No transferido)";
+      return "Modelo " + ubicacion_seleccionada.model_name + transferido_texto;
     },
     obtenerDescripcion(ubicacion_seleccionada) {
       return ubicacion_seleccionada.description;
