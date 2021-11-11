@@ -20,7 +20,12 @@
             label="Ubicación seleccionada"
           ></v-select>
           <!-- :src="require('../assets/logo.svg')" -->
-          <v-img :src="imagen_ubicacion" class="my-3" contain height="200" />
+          <v-img
+            v-bind:src="imagen_ubicacion"
+            class="my-3"
+            contain
+            height="200"
+          />
 
           <v-card>
             <v-card-title>
@@ -43,6 +48,13 @@
         </v-col>
         <v-col class="text-center">
           <v-date-picker
+            class="mt-4"
+            min="2016-06-15"
+            max="2018-03-20"
+            locale="es-MX"
+            color="primary"
+          ></v-date-picker>
+          <!-- <v-date-picker
             v-model="date"
             :allowed-dates="allowedDates"
             class="mt-4"
@@ -50,7 +62,7 @@
             max="2018-03-20"
             locale="es-MX"
             color="primary"
-          ></v-date-picker>
+          ></v-date-picker> -->
         </v-col>
       </v-row>
       <v-divider></v-divider>
@@ -98,6 +110,8 @@
 
 <script>
 // import PvfSelect from "@/components/PvfSelect";
+// import { listarUbicaciones, getImagenUbicacion } from "@/services/index";
+import { listarUbicaciones } from "@/services/index";
 
 export default {
   name: "PvfContent",
@@ -105,8 +119,7 @@ export default {
     // PvfSelect,
   },
   data: () => ({
-    imagen_ubicacion: 
-      require("../assets/logo.svg"),
+    imagen_ubicacion: require("@/assets/images/ubicaciones/all.png"),
     // "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScESJtxLLl9e12q9nTIgacSptopeZR1tAFbA&usqp",
     // "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRR13g5pvUfHTTvC1Xgk80uhzSZHYXWydYWsg",
     // "https://www.minera-irl.com/wp-content/uploads/2015/05/mapa-peru.jpg",
@@ -117,7 +130,7 @@ export default {
         texto_ubicacion: "PUCP - Lima, Lima (PERC)",
         model_name: "1D-CNN",
         description: "Descrip...",
-        image: null,
+        image_path: null,
         is_trasfered: 0,
         origin_system: null,
         technology: "PERC",
@@ -128,29 +141,15 @@ export default {
       },
       {
         id_ubicacion_modelo: 2,
-        texto_ubicacion: "UNI - Lima, Lima (PERC)",
-        model_name: "1D-CNN",
+        texto_ubicacion: "PUCP - Lima, Lima (PERC)",
+        model_name: "1D-LSTM",
         description: "Descrip...",
         image: null,
         is_trasfered: 0,
         origin_system: null,
         technology: "PERC",
-        label: "UNI",
-        full_name: "Universidad Nacional de Ingeniería",
-        region: "Lima",
-        city: "Lima",
-      },
-      {
-        id_ubicacion_modelo: 3,
-        texto_ubicacion: "UNI - Lima, Lima (HIT)",
-        model_name: "1D-CNN",
-        description: "Descrip...",
-        image: null,
-        is_trasfered: 0,
-        origin_system: null,
-        technology: "HIT",
-        label: "UNI",
-        full_name: "Universidad Nacional de Ingeniería",
+        label: "PUCP",
+        full_name: "Pontificia Universidad Católica del Perú",
         region: "Lima",
         city: "Lima",
       },
@@ -160,6 +159,11 @@ export default {
   methods: {
     cambioUbicacion(ubicacion_seleccionada) {
       this.idUbicacion = ubicacion_seleccionada;
+      let path = this.filtrarUbicaion(
+        this.ubicaciones,
+        ubicacion_seleccionada
+      )[0].image_path;
+      this.imagen_ubicacion = require("@/" + path.substring(2));
     },
     obtenerTitulo(ubicacion_seleccionada) {
       let transferido_texto = ubicacion_seleccionada.is_trasfered
@@ -180,8 +184,22 @@ export default {
     // this.cambioUbicacion("1");\
 
     //inicializar ubicaciones
-    this.ubicacionDefault = this.ubicaciones[0];
-    this.idUbicacion = 1;
+    listarUbicaciones().then((response) => {
+      this.ubicaciones = response.data;
+      this.idUbicacion = this.ubicaciones[0].id_ubicacion_modelo;
+      this.ubicacionDefault = this.filtrarUbicaion(
+        this.ubicaciones,
+        this.idUbicacion
+      )[0];
+      let path = this.filtrarUbicaion(this.ubicaciones, this.idUbicacion)[0]
+        .image_path;
+      this.imagen_ubicacion = require("@/" + path.substring(2));
+    });
+
+    // getImagenUbicacion(1).then((response) => {
+    //   const blob = new Blob([response.data], { type: "image/jpg" });
+    //   this.imagen_ubicacion = URL.createObjectURL(blob);
+    // });
   },
 };
 </script>
