@@ -123,7 +123,8 @@ export default {
     // PvfSelect,
   },
   data: () => ({
-    imagen_ubicacion: require("@/assets/images/ubicaciones/all.png"),
+    imagen_ubicacion: "https://pvforecastingimages.s3.amazonaws.com/ubicaciones/all-s.png",
+    // imagen_ubicacion: require("@/assets/images/ubicaciones/all.png"),
     // "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScESJtxLLl9e12q9nTIgacSptopeZR1tAFbA&usqp",
     // "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRR13g5pvUfHTTvC1Xgk80uhzSZHYXWydYWsg",
     // "https://www.minera-irl.com/wp-content/uploads/2015/05/mapa-peru.jpg",
@@ -157,7 +158,8 @@ export default {
         this.ubicaciones,
         ubicacion_seleccionada
       )[0].image_path;
-      this.imagen_ubicacion = require("@/" + path.substring(2));
+      // this.imagen_ubicacion = require("@/assets/images/" + path);
+      this.imagen_ubicacion = "https://pvforecastingimages.s3.amazonaws.com/" + path;
     },
     obtenerTitulo(ubicacion_seleccionada) {
       let transferido_texto = ubicacion_seleccionada.is_trasfered
@@ -187,7 +189,7 @@ export default {
       )[0];
       let path = this.filtrarUbicaion(this.ubicaciones, this.idUbicacion)[0]
         .image_path;
-      this.imagen_ubicacion = require("@/" + path.substring(2));
+      this.imagen_ubicacion = "https://pvforecastingimages.s3.amazonaws.com/" + path;
     });
 
     // getImagenUbicacion(1).then((response) => {
