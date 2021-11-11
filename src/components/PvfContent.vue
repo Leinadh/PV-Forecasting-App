@@ -3,7 +3,7 @@
     <v-col>
       <v-row cols="12" class="mt-0">
         <v-card-text class="text-center">
-          Por favor, seleccione una ubicación y un día de pronóstico.'
+          Por favor, seleccione una ubicación y un día de pronóstico.
           <!-- <br>
           Se mostrará una simulación de las predicciones exactamente hace un año. -->
         </v-card-text>
@@ -48,9 +48,10 @@
         </v-col>
         <v-col class="text-center">
           <v-date-picker
+            v-model="picker"
             class="mt-4"
-            min="2016-06-15"
-            max="2018-03-20"
+            :min="fecha_min"
+            :max="fecha_max"
             locale="es-MX"
             color="primary"
           ></v-date-picker>
@@ -70,11 +71,14 @@
       <v-row cols="12" class="mt-5">
         <v-col align="center" cols="12">
           <v-card-title class="justify-center">
-            Predicción del Pac generado
+            Predicción de la potencia AC generada
           </v-card-title>
           <v-card-text class="text-center">
             Se realiza una predicción para cada hora entre las 4 a. m. y las 5
             p. m. del día seleccionado.
+          </v-card-text>
+          <v-card-text class="text-center">
+            {{picker}}
           </v-card-text>
           <v-img
             :src="require('../assets/logo.svg')"
@@ -111,7 +115,7 @@
 <script>
 // import PvfSelect from "@/components/PvfSelect";
 // import { listarUbicaciones, getImagenUbicacion } from "@/services/index";
-import { listarUbicaciones } from "@/services/index";
+import { listarUbicaciones, getFechasLimite } from "@/services/index";
 
 export default {
   name: "PvfContent",
@@ -124,37 +128,27 @@ export default {
     // "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRR13g5pvUfHTTvC1Xgk80uhzSZHYXWydYWsg",
     // "https://www.minera-irl.com/wp-content/uploads/2015/05/mapa-peru.jpg",
     ubicacionDefault: { id_ubicacion_modelo: 0, texto_ubicacion: "" },
-    ubicaciones: [
-      {
-        id_ubicacion_modelo: 1,
-        texto_ubicacion: "PUCP - Lima, Lima (PERC)",
-        model_name: "1D-CNN",
-        description: "Descrip...",
-        image_path: null,
-        is_trasfered: 0,
-        origin_system: null,
-        technology: "PERC",
-        label: "PUCP",
-        full_name: "Pontificia Universidad Católica del Perú",
-        region: "Lima",
-        city: "Lima",
-      },
-      {
-        id_ubicacion_modelo: 2,
-        texto_ubicacion: "PUCP - Lima, Lima (PERC)",
-        model_name: "1D-LSTM",
-        description: "Descrip...",
-        image: null,
-        is_trasfered: 0,
-        origin_system: null,
-        technology: "PERC",
-        label: "PUCP",
-        full_name: "Pontificia Universidad Católica del Perú",
-        region: "Lima",
-        city: "Lima",
-      },
-    ],
+    ubicaciones: [],
+    // ubicaciones: [
+    //   {
+    //     id_ubicacion_modelo: 1,
+    //     texto_ubicacion: "PUCP - Lima, Lima (PERC)",
+    //     model_name: "1D-CNN",
+    //     description: "Descrip...",
+    //     image_path: null,
+    //     is_trasfered: 0,
+    //     origin_system: null,
+    //     technology: "PERC",
+    //     label: "PUCP",
+    //     full_name: "Pontificia Universidad Católica del Perú",
+    //     region: "Lima",
+    //     city: "Lima",
+    //   },
+    // ],
     idUbicacion: 0,
+    fecha_min: "",
+    fecha_max: "",
+    picker: "",
   }),
   methods: {
     cambioUbicacion(ubicacion_seleccionada) {
@@ -200,6 +194,12 @@ export default {
     //   const blob = new Blob([response.data], { type: "image/jpg" });
     //   this.imagen_ubicacion = URL.createObjectURL(blob);
     // });
+    getFechasLimite().then((response) => {
+      const fechas = response.data;
+      this.fecha_min = fechas.min_date;
+      this.fecha_max = fechas.max_date;
+      this.picker = fechas.max_date;
+    });
   },
 };
 </script>
