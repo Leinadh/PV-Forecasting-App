@@ -78,7 +78,7 @@
             p. m. del día seleccionado.
           </v-card-text>
           <v-card-text class="text-center">
-            {{picker}}
+            {{ picker }}
           </v-card-text>
           <v-img
             :src="require('../assets/logo.svg')"
@@ -150,7 +150,8 @@ export default {
     fecha_max: "",
     picker: "",
     s3_url: "https://pvforecastingimages.s3.amazonaws.com/",
-    imagen_ubicacion: "https://pvforecastingimages.s3.amazonaws.com/ubicaciones/all-s.png",
+    imagen_ubicacion:
+      "https://pvforecastingimages.s3.amazonaws.com/ubicaciones/all-s.png",
   }),
   methods: {
     cambioUbicacion(ubicacion_seleccionada) {
@@ -181,28 +182,54 @@ export default {
     // this.cambioUbicacion("1");\
 
     //inicializar ubicaciones
-    listarUbicaciones().then((response) => {
-      this.ubicaciones = response.data;
-      this.idUbicacion = this.ubicaciones[0].id_ubicacion_modelo;
-      this.ubicacionDefault = this.filtrarUbicaion(
-        this.ubicaciones,
-        this.idUbicacion
-      )[0];
-      let path = this.filtrarUbicaion(this.ubicaciones, this.idUbicacion)[0]
-        .image_path;
-      this.imagen_ubicacion = this.s3_url + path;
-    });
+    try {
+      listarUbicaciones().then((response) => {
+        this.ubicaciones = response.data;
+        this.idUbicacion = this.ubicaciones[0].id_ubicacion_modelo;
+        this.ubicacionDefault = this.filtrarUbicaion(
+          this.ubicaciones,
+          this.idUbicacion
+        )[0];
+        let path = this.filtrarUbicaion(this.ubicaciones, this.idUbicacion)[0]
+          .image_path;
+        this.imagen_ubicacion = this.s3_url + path;
+      });
+    } catch (error) {
+      console.error(error);
+      listarUbicaciones().then((response) => {
+        this.ubicaciones = response.data;
+        this.idUbicacion = this.ubicaciones[0].id_ubicacion_modelo;
+        this.ubicacionDefault = this.filtrarUbicaion(
+          this.ubicaciones,
+          this.idUbicacion
+        )[0];
+        let path = this.filtrarUbicaion(this.ubicaciones, this.idUbicacion)[0]
+          .image_path;
+        this.imagen_ubicacion = this.s3_url + path;
+      });
+    }
 
     // getImagenUbicacion(1).then((response) => {
     //   const blob = new Blob([response.data], { type: "image/jpg" });
     //   this.imagen_ubicacion = URL.createObjectURL(blob);
     // });
-    getFechasLimite().then((response) => {
-      const fechas = response.data;
-      this.fecha_min = fechas.min_date;
-      this.fecha_max = fechas.max_date;
-      this.picker = fechas.max_date;
-    });
+
+    try {
+      getFechasLimite().then((response) => {
+        const fechas = response.data;
+        this.fecha_min = fechas.min_date;
+        this.fecha_max = fechas.max_date;
+        this.picker = fechas.max_date;
+      });
+    } catch (error) {
+      console.error(error);
+      getFechasLimite().then((response) => {
+        const fechas = response.data;
+        this.fecha_min = fechas.min_date;
+        this.fecha_max = fechas.max_date;
+        this.picker = fechas.max_date;
+      });
+    }
   },
 };
 </script>
