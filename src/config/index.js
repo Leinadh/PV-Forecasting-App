@@ -1,5 +1,5 @@
 const config = {
-    api: 'http://127.0.0.1:8000'
+    api: 'http://ec2-3-230-30-25.compute-1.amazonaws.com:8000'
 }
 
 export default config;

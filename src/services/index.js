@@ -17,3 +17,9 @@ export const getFechasLimite = async () => {
     console.log(url);
     return await axios.get(`${url}`)
 }
+
+export const listarGraficosMetricas = async () => {
+    const url = `${config.api}/listar-graficos-metricas`;
+    console.log(url);
+    return await axios.get(`${url}`)
+}

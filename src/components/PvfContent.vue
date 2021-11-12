@@ -115,7 +115,11 @@
 <script>
 // import PvfSelect from "@/components/PvfSelect";
 // import { listarUbicaciones, getImagenUbicacion } from "@/services/index";
-import { listarUbicaciones, getFechasLimite } from "@/services/index";
+import {
+  listarUbicaciones,
+  getFechasLimite,
+  listarGraficosMetricas,
+} from "@/services/index";
 
 export default {
   name: "PvfContent",
@@ -152,6 +156,7 @@ export default {
     s3_url: "https://pvforecastingimages.s3.amazonaws.com/",
     imagen_ubicacion:
       "https://pvforecastingimages.s3.amazonaws.com/ubicaciones/all-s.png",
+    graficos_metricas: [],
   }),
   methods: {
     cambioUbicacion(ubicacion_seleccionada) {
@@ -228,6 +233,17 @@ export default {
         this.fecha_min = fechas.min_date;
         this.fecha_max = fechas.max_date;
         this.picker = fechas.max_date;
+      });
+    }
+
+    try {
+      listarGraficosMetricas().then((response) => {
+        this.graficos_metricas = response.data;
+      });
+    } catch (error) {
+      console.error(error);
+      listarGraficosMetricas().then((response) => {
+        this.graficos_metricas = response.data;
       });
     }
   },
