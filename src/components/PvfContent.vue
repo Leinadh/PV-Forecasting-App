@@ -74,7 +74,7 @@
             Predicción de la potencia AC generada
           </v-card-title>
           <v-card-text class="text-center">
-            Se realiza una predicción para cada hora entre las 4 a. m. y las 5
+            Se realiza una predicción para cada hora entre las 6 a. m. y las 5
             p. m. del día seleccionado.
           </v-card-text>
           <v-card-text class="text-center">
