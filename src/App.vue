@@ -14,7 +14,7 @@
           alt="App Logo"
           class="shrink ml-1 mr-2"
           contain
-          src="@/assets/pv-forecasting-logo.svg"
+          src="@/assets/solar-power.svg"
           transition="scale-transition"
           width="31"
         />
