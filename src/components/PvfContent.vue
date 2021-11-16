@@ -181,11 +181,15 @@ export default {
       let grafico = this.filtrarGrafico(this.graficos_metricas)[0];
       // this.imagen_ubicacion = require("@/assets/images/" + path);
       if (grafico != null) {
-        this.img_grafico = this.s3_url + grafico.metric_image_path;
+        if (grafico.date === this.fecha_max)
+          this.img_grafico = this.s3_url + grafico.metric_image_path;
+          // this.img_grafico = this.s3_url + grafico.metric_current_image_path;
+        else this.img_grafico = this.s3_url + grafico.metric_image_path;
         this.rmse_actual = grafico.value;
         this.rmse_previo = grafico.previous_value;
       } else {
-        this.img_grafico = "https://pvforecastingimages.s3.us-east-1.amazonaws.com/fondo_graficos.png";
+        this.img_grafico =
+          "https://pvforecastingimages.s3.us-east-1.amazonaws.com/fondo_graficos.png";
         this.rmse_actual = "-";
         this.rmse_previo = "-";
       }
