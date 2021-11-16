@@ -135,25 +135,25 @@ export default {
     ubicacionDefault: { id_ubicacion_modelo: 0, texto_ubicacion: "" },
     img_grafico:
       "https://pvforecastingimages.s3.us-east-1.amazonaws.com/fondo_graficos.png",
-    // ubicaciones: [],
-    ubicaciones: [
-      {
-        id_ubicacion_modelo: 4,
-        texto_ubicacion: "UNTRM - Chachapoyas, Amazonas (PERC)",
-        model_name: "1D-CNN",
-        description:
-          "Este modelo fue entrenado con datos recolectado en las instalaciones de la Universidad Nacional Toribio Rodríguez de Mendoza de Amazonas en Chachapoyas, Amazonas.",
-        image_path: "ubicaciones/u3-s.png",
-        is_trasfered: 0,
-        origin_system: null,
-        technology: "PERC",
-        label: "UNTRM",
-        full_name:
-          "Universidad Nacional Toribio Rodríguez de Mendoza de Amazonas",
-        region: "Amazonas",
-        city: "Chachapoyas",
-      },
-    ],
+    ubicaciones: [],
+    // ubicaciones: [
+    //   {
+    //     id_ubicacion_modelo: 4,
+    //     texto_ubicacion: "UNTRM - Chachapoyas, Amazonas (PERC)",
+    //     model_name: "1D-CNN",
+    //     description:
+    //       "Este modelo fue entrenado con datos recolectado en las instalaciones de la Universidad Nacional Toribio Rodríguez de Mendoza de Amazonas en Chachapoyas, Amazonas.",
+    //     image_path: "ubicaciones/u3-s.png",
+    //     is_trasfered: 0,
+    //     origin_system: null,
+    //     technology: "PERC",
+    //     label: "UNTRM",
+    //     full_name:
+    //       "Universidad Nacional Toribio Rodríguez de Mendoza de Amazonas",
+    //     region: "Amazonas",
+    //     city: "Chachapoyas",
+    //   },
+    // ],
     idUbicacion: 0,
     fecha_min: "",
     fecha_max: "",
