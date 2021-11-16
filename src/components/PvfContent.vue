@@ -182,8 +182,8 @@ export default {
       // this.imagen_ubicacion = require("@/assets/images/" + path);
       if (grafico != null) {
         if (grafico.date === this.fecha_max)
-          this.img_grafico = this.s3_url + grafico.metric_image_path;
-          // this.img_grafico = this.s3_url + grafico.metric_current_image_path;
+          // this.img_grafico = this.s3_url + grafico.metric_image_path;
+          this.img_grafico = this.s3_url + grafico.metric_current_image_path;
         else this.img_grafico = this.s3_url + grafico.metric_image_path;
         this.rmse_actual = grafico.value;
         this.rmse_previo = grafico.previous_value;
