@@ -1,5 +1,8 @@
 import axios from 'axios';
 import config from '@/config';
+import axiosRetry from 'axios-retry';
+
+axiosRetry(axios, {retries: 10})
 
 export const listarUbicaciones = async () => {
     const url = `${config.api}/listar-ubicaciones`;

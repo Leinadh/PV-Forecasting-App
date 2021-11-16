@@ -162,8 +162,8 @@ export default {
     imagen_ubicacion:
       "https://pvforecastingimages.s3.amazonaws.com/ubicaciones/all-s.png",
     graficos_metricas: [],
-    rmse_actual: 124,
-    rmse_previo: 125,
+    rmse_actual: "-",
+    rmse_previo: "-",
   }),
   methods: {
     cambioUbicacion(ubicacion_seleccionada) {
@@ -205,67 +205,34 @@ export default {
     // this.cambioUbicacion("1");\
 
     //inicializar ubicaciones
-    try {
-      listarUbicaciones().then((response) => {
-        this.ubicaciones = response.data;
-        this.idUbicacion = this.ubicaciones[0].id_ubicacion_modelo;
-        this.ubicacionDefault = this.filtrarUbicaion(
-          this.ubicaciones,
-          this.idUbicacion
-        )[0];
-        let path = this.filtrarUbicaion(this.ubicaciones, this.idUbicacion)[0]
-          .image_path;
-        this.imagen_ubicacion = this.s3_url + path;
-      });
-    } catch (error) {
-      console.error(error);
-      listarUbicaciones().then((response) => {
-        this.ubicaciones = response.data;
-        this.idUbicacion = this.ubicaciones[0].id_ubicacion_modelo;
-        this.ubicacionDefault = this.filtrarUbicaion(
-          this.ubicaciones,
-          this.idUbicacion
-        )[0];
-        let path = this.filtrarUbicaion(this.ubicaciones, this.idUbicacion)[0]
-          .image_path;
-        this.imagen_ubicacion = this.s3_url + path;
-      });
-    }
+    listarUbicaciones().then((response) => {
+      this.ubicaciones = response.data;
+      this.idUbicacion = this.ubicaciones[0].id_ubicacion_modelo;
+      this.ubicacionDefault = this.filtrarUbicaion(
+        this.ubicaciones,
+        this.idUbicacion
+      )[0];
+      let path = this.filtrarUbicaion(this.ubicaciones, this.idUbicacion)[0]
+        .image_path;
+      this.imagen_ubicacion = this.s3_url + path;
+    });
 
     // getImagenUbicacion(1).then((response) => {
     //   const blob = new Blob([response.data], { type: "image/jpg" });
     //   this.imagen_ubicacion = URL.createObjectURL(blob);
     // });
 
-    try {
-      getFechasLimite().then((response) => {
-        const fechas = response.data;
-        this.fecha_min = fechas.min_date;
-        this.fecha_max = fechas.max_date;
-        this.picker = fechas.max_date;
-      });
-    } catch (error) {
-      console.error(error);
-      getFechasLimite().then((response) => {
-        const fechas = response.data;
-        this.fecha_min = fechas.min_date;
-        this.fecha_max = fechas.max_date;
-        this.picker = fechas.max_date;
-      });
-    }
+    getFechasLimite().then((response) => {
+      const fechas = response.data;
+      this.fecha_min = fechas.min_date;
+      this.fecha_max = fechas.max_date;
+      this.picker = fechas.max_date;
+    });
 
-    try {
-      listarGraficosMetricas().then((response) => {
-        this.graficos_metricas = response.data;
-        this.cambioGrafico();
-      });
-    } catch (error) {
-      console.error(error);
-      listarGraficosMetricas().then((response) => {
-        this.graficos_metricas = response.data;
-        this.cambioGrafico();
-      });
-    }
+    listarGraficosMetricas().then((response) => {
+      this.graficos_metricas = response.data;
+      this.cambioGrafico();
+    });
   },
 };
 </script>
