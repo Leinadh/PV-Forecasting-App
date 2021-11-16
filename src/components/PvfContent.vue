@@ -48,12 +48,14 @@
         </v-col>
         <v-col class="text-center">
           <v-date-picker
+            v-on:change="cambioGrafico"
             v-model="picker"
             class="mt-4"
             :min="fecha_min"
             :max="fecha_max"
             locale="es-MX"
             color="primary"
+            :show-current="fecha_max"
           ></v-date-picker>
           <!-- <v-date-picker
             v-model="date"
@@ -80,12 +82,7 @@
           <v-card-text class="text-center">
             {{ picker }}
           </v-card-text>
-          <v-img
-            :src="require('../assets/logo.svg')"
-            class="my-3"
-            contain
-            width="300"
-          />
+          <v-img :src="img_grafico" class="my-3" contain width="500" />
         </v-col>
       </v-row>
 
@@ -94,17 +91,21 @@
         <v-col cols="6" align="right">
           <v-card align="center" width="200">
             <v-icon size="50px" class="mt-3"> mdi-chart-areaspline</v-icon>
-            <v-card-title class="justify-center">122</v-card-title>
-            <v-card-text class="text-center"> RMSE de predicción </v-card-text>
+            <v-card-title class="justify-center">{{
+              rmse_previo
+            }}</v-card-title>
+            <v-card-text class="text-center">
+              RMSE del día anterior
+            </v-card-text>
           </v-card>
         </v-col>
         <v-col cols="6" align="left">
           <v-card align="center" width="200">
             <v-icon size="50px" class="mt-3"> mdi-chart-areaspline</v-icon>
-            <v-card-title class="justify-center">123</v-card-title>
-            <v-card-text class="text-center">
-              RMSE del día anterior
-            </v-card-text>
+            <v-card-title class="justify-center">{{
+              rmse_actual
+            }}</v-card-title>
+            <v-card-text class="text-center"> RMSE de predicción </v-card-text>
           </v-card>
         </v-col>
       </v-row>
@@ -132,23 +133,27 @@ export default {
     // "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRR13g5pvUfHTTvC1Xgk80uhzSZHYXWydYWsg",
     // "https://www.minera-irl.com/wp-content/uploads/2015/05/mapa-peru.jpg",
     ubicacionDefault: { id_ubicacion_modelo: 0, texto_ubicacion: "" },
-    ubicaciones: [],
-    // ubicaciones: [
-    //   {
-    //     id_ubicacion_modelo: 1,
-    //     texto_ubicacion: "PUCP - Lima, Lima (PERC)",
-    //     model_name: "1D-CNN",
-    //     description: "Descrip...",
-    //     image_path: null,
-    //     is_trasfered: 0,
-    //     origin_system: null,
-    //     technology: "PERC",
-    //     label: "PUCP",
-    //     full_name: "Pontificia Universidad Católica del Perú",
-    //     region: "Lima",
-    //     city: "Lima",
-    //   },
-    // ],
+    img_grafico:
+      "https://pvforecastingimages.s3.us-east-1.amazonaws.com/fondo_graficos.png",
+    // ubicaciones: [],
+    ubicaciones: [
+      {
+        id_ubicacion_modelo: 4,
+        texto_ubicacion: "UNTRM - Chachapoyas, Amazonas (PERC)",
+        model_name: "1D-CNN",
+        description:
+          "Este modelo fue entrenado con datos recolectado en las instalaciones de la Universidad Nacional Toribio Rodríguez de Mendoza de Amazonas en Chachapoyas, Amazonas.",
+        image_path: "ubicaciones/u3-s.png",
+        is_trasfered: 0,
+        origin_system: null,
+        technology: "PERC",
+        label: "UNTRM",
+        full_name:
+          "Universidad Nacional Toribio Rodríguez de Mendoza de Amazonas",
+        region: "Amazonas",
+        city: "Chachapoyas",
+      },
+    ],
     idUbicacion: 0,
     fecha_min: "",
     fecha_max: "",
@@ -157,6 +162,8 @@ export default {
     imagen_ubicacion:
       "https://pvforecastingimages.s3.amazonaws.com/ubicaciones/all-s.png",
     graficos_metricas: [],
+    rmse_actual: 124,
+    rmse_previo: 125,
   }),
   methods: {
     cambioUbicacion(ubicacion_seleccionada) {
@@ -167,6 +174,14 @@ export default {
       )[0].image_path;
       // this.imagen_ubicacion = require("@/assets/images/" + path);
       this.imagen_ubicacion = this.s3_url + path;
+    },
+    cambioGrafico() {
+      // this.idUbicacion = ubicacion_seleccionada;
+      let grafico = this.filtrarGrafico(this.graficos_metricas)[0];
+      // this.imagen_ubicacion = require("@/assets/images/" + path);
+      this.img_grafico = this.s3_url + grafico.metric_image_path;
+      this.rmse_actual = grafico.value;
+      this.rmse_previo = grafico.previous_value;
     },
     obtenerTitulo(ubicacion_seleccionada) {
       let transferido_texto = ubicacion_seleccionada.is_trasfered
@@ -181,6 +196,9 @@ export default {
       return ubicaciones.filter(
         (ubicacion) => ubicacion.id_ubicacion_modelo === ubicacion_id
       );
+    },
+    filtrarGrafico(ubicaciones) {
+      return ubicaciones.filter((ubicacion) => ubicacion.date === this.picker);
     },
   },
   mounted: function () {
@@ -239,11 +257,13 @@ export default {
     try {
       listarGraficosMetricas().then((response) => {
         this.graficos_metricas = response.data;
+        this.cambioGrafico();
       });
     } catch (error) {
       console.error(error);
       listarGraficosMetricas().then((response) => {
         this.graficos_metricas = response.data;
+        this.cambioGrafico();
       });
     }
   },

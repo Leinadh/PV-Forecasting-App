@@ -99,7 +99,8 @@ export default {
   methods: {
     updateDatetime: function () {
       let datetime = new Date();
-      datetime.setFullYear(datetime.getFullYear() - 1);
+      datetime.setMonth(((datetime.getMonth() - 1) < 0) ? 12: datetime.getMonth() - 1);
+      // datetime.setFullYear(datetime.getFullYear() - 1);
 
       let hora = datetime.getHours();
       let minutos = datetime.getMinutes();
