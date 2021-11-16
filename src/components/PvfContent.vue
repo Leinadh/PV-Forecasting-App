@@ -79,9 +79,9 @@
             Se realiza una predicción para cada hora entre las 6 a. m. y las 5
             p. m. del día seleccionado.
           </v-card-text>
-          <v-card-text class="text-center">
+          <!-- <v-card-text class="text-center">
             {{ picker }}
-          </v-card-text>
+          </v-card-text> -->
           <v-img :src="img_grafico" class="my-3" contain width="500" />
         </v-col>
       </v-row>
@@ -174,14 +174,21 @@ export default {
       )[0].image_path;
       // this.imagen_ubicacion = require("@/assets/images/" + path);
       this.imagen_ubicacion = this.s3_url + path;
+      this.cambioGrafico();
     },
     cambioGrafico() {
       // this.idUbicacion = ubicacion_seleccionada;
       let grafico = this.filtrarGrafico(this.graficos_metricas)[0];
       // this.imagen_ubicacion = require("@/assets/images/" + path);
-      this.img_grafico = this.s3_url + grafico.metric_image_path;
-      this.rmse_actual = grafico.value;
-      this.rmse_previo = grafico.previous_value;
+      if (grafico != null) {
+        this.img_grafico = this.s3_url + grafico.metric_image_path;
+        this.rmse_actual = grafico.value;
+        this.rmse_previo = grafico.previous_value;
+      } else {
+        this.img_grafico = "https://pvforecastingimages.s3.us-east-1.amazonaws.com/fondo_graficos.png";
+        this.rmse_actual = "-";
+        this.rmse_previo = "-";
+      }
     },
     obtenerTitulo(ubicacion_seleccionada) {
       let transferido_texto = ubicacion_seleccionada.is_trasfered
@@ -198,7 +205,11 @@ export default {
       );
     },
     filtrarGrafico(ubicaciones) {
-      return ubicaciones.filter((ubicacion) => ubicacion.date === this.picker);
+      return ubicaciones.filter(
+        (ubicacion) =>
+          ubicacion.date === this.picker &&
+          ubicacion.id_ubicacion_modelo === this.idUbicacion
+      );
     },
   },
   mounted: function () {
@@ -215,24 +226,24 @@ export default {
       let path = this.filtrarUbicaion(this.ubicaciones, this.idUbicacion)[0]
         .image_path;
       this.imagen_ubicacion = this.s3_url + path;
+
+      getFechasLimite().then((response) => {
+        const fechas = response.data;
+        this.fecha_min = fechas.min_date;
+        this.fecha_max = fechas.max_date;
+        this.picker = fechas.max_date;
+
+        listarGraficosMetricas().then((response) => {
+          this.graficos_metricas = response.data;
+          this.cambioGrafico();
+        });
+      });
     });
 
     // getImagenUbicacion(1).then((response) => {
     //   const blob = new Blob([response.data], { type: "image/jpg" });
     //   this.imagen_ubicacion = URL.createObjectURL(blob);
     // });
-
-    getFechasLimite().then((response) => {
-      const fechas = response.data;
-      this.fecha_min = fechas.min_date;
-      this.fecha_max = fechas.max_date;
-      this.picker = fechas.max_date;
-    });
-
-    listarGraficosMetricas().then((response) => {
-      this.graficos_metricas = response.data;
-      this.cambioGrafico();
-    });
   },
 };
 </script>
