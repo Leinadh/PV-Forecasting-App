@@ -31,8 +31,12 @@
 
       <v-spacer></v-spacer>
 
-      <v-chip label  color="accent" outlined  class="mr-2"> {{ currentDate }} </v-chip>
-      <v-chip label color="accent" outlined  class="mr-1"> {{ currentTime }}</v-chip>
+      <v-chip label color="accent" outlined class="mr-2">
+        {{ currentDate }}
+      </v-chip>
+      <v-chip label color="accent" outlined class="mr-1">
+        {{ currentTime }}
+      </v-chip>
       <!-- <v-chip label outlined class="mr-2" color="secondary" text-color="white"> 10:44 P.M. </v-chip> -->
 
       <!-- <v-spacer></v-spacer> -->
@@ -99,7 +103,12 @@ export default {
   methods: {
     updateDatetime: function () {
       let datetime = new Date();
-      datetime.setMonth(((datetime.getMonth() - 1) < 0) ? 12: datetime.getMonth() - 1);
+      let mesesAntes = 1; //
+      datetime.setMonth(
+        datetime.getMonth() - mesesAntes < 0
+          ? datetime.getMonth() - mesesAntes + 12
+          : datetime.getMonth() - mesesAntes
+      );
       // datetime.setFullYear(datetime.getFullYear() - 1);
 
       let hora = datetime.getHours();
@@ -111,6 +120,7 @@ export default {
         hora -= 12;
         ampm = " p. m.";
       }
+      if (hora === 12) ampm = " p. m.";
       if (hora < 10) {
         hora = "0" + hora;
       }
