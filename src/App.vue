@@ -103,7 +103,7 @@ export default {
   methods: {
     updateDatetime: function () {
       let datetime = new Date();
-      let mesesAntes = 1; //
+      let mesesAntes = 2; //
       datetime.setMonth(
         datetime.getMonth() - mesesAntes < 0
           ? datetime.getMonth() - mesesAntes + 12
